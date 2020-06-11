@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+
+</head>
+<body>
+<script>
+    function aaaa(){
+        alert("hello");
+        $.ajax({
+            type:"POST",
+            url:"http://localhost/api/selectPeople.action",
+            dataType: "json",
+            success:function (result) {
+                alert(JSON.stringify(result));
+                for (var key in result) {
+                    $("#tab").append("");
+                    alert("分数的id：" + result[key].id);
+                    alert("学生的人数：" + result[key].name);
+                    alert("学生的人数：" + result[key].age);
+                    alert("学生的人数：" + result[key].work);
+                }
+            }
+        });
+         window.onload=aaaa();
+    }
+</script>
+
+<table id=”tab“>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <button type="button">修改</button>
+            <button type="button" onclick="return test()">删除</button>
+        </td>
+        <input type="submit" value="提交1" onclick="aaaa();"/>
+        <form>
+            <input type="submit" value="提交" onclick="aaaa()"/>
+        </form>
+    </tr>
+</table>
+</body>
+</html>

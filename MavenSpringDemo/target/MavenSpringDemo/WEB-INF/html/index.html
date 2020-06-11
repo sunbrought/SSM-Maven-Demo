@@ -1,0 +1,143 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>客户人员管理系统</title>
+<link rel="stylesheet" href="/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css.map" />
+    <link rel="stylesheet" href="/css/bootstrap-responsive.css" />
+<script type="text/javascript" src="/js/npm.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<script language="javascript">
+        function requestData(){
+        $.ajax({
+            url: "http://localhost/api/selectPeople.action",
+            type: "post",
+            dataType: "json",
+            success: function(data){
+                /*这个方法里是ajax发送请求成功之后执行的代码*/
+                showData(data);//我们仅做数据展示
+                console.log(data);
+            },
+            error: function(msg){
+                alert("ajax连接异常："+msg);
+            }
+        });
+    }
+        //自动加载页面
+         window.onload = requestData;
+    function showData(data) {
+        var str = "";//定义用于拼接的字符串
+        for (var i = 1; i <= data.length; i++) {
+            //拼接表格的行和列
+           // str = "<tr><td>" + data[i].id + "</td><td>" + data[i].name + "</td></tr>";
+            //追加到table中
+            str = "<tr>" +
+                "<td>" + data[i].id+ "</td>" +
+                "<td>" + data[i].name + "</td>" +
+                "<td>" + data[i].age + "</td>" +
+                "<td>" + data[i].work + "</td>" +
+                "<td><button>修改</button><button>删除</button></td>" +
+                "</tr>";
+            $('#btSearch').click(function () {
+
+            }
+    }
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('#btSearch').click(function () {
+            var checkDate = $('#checkDate').val();
+            var orderNo = $('#orderNo').val();
+            var sortFiled = $('#sortFiled').val();
+            var hotelSeq = $('#hotelSeq').val();
+            var tbody=window.document.getElementById("table-result");
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "ac/order/queryCheatOrder",
+                data: {
+                    hotelSeq: hotelSeq,
+                    orderNo: orderNo,
+                    sortFiled: sortFiled,
+                    checkDate: checkDate
+                },
+                success: function (msg) {
+                    if (msg.ret) {
+                        var str = "";
+                        var data = msg.data;
+
+                        for (i in data) {
+                            str += "<tr>" +
+                                "<td>" + data[i].id+ "</td>" +
+                                "<td>" + data[i].name + "</td>" +
+                                "<td>" + data[i].age + "</td>" +
+                                "<td>" + data[i].work + "</td>" +
+                                "<td><button>修改</button><button>删除</button></td>" +
+                                "</tr>";
+                        }
+                        tbody.innerHTML = str;
+                    }
+                },
+                error: function () {
+                    alert("查询失败")
+                }
+            });
+        });
+    });
+</script>
+<div class="container">
+    <div class="main pusher">
+        <form class="ui form vertical segment form-search">
+            <div class="fields">
+                <div class="halfsixCl wide field js_query_date">
+                    <label for="checkDate">id</label>
+                    <input name="checkDate" type="text" id="checkDate">
+                </div>
+
+                <div class="sixCl wide field">
+                    <label>姓名</label>
+                    <input name="hotelSeq" id="hotelSeq" placeholder="" type="text">
+                </div>
+
+                <div class="sixCl wide field js_query_seq">
+                    <label>年龄</label>
+                    <input type="text" maxlength="50" name="orderNo" id="orderNo" placeholder="">
+                </div>
+                <div class="sixCl wide field js_query_btype">
+                    <label>工作</label>
+                    <select name="sortFiled" id="sortFiled">
+                        <option value="hotel_seq">医生</option>
+                        <option value="order_no">教师</option>
+                        <option value="cellid">工人</option>
+                    </select>
+                </div>
+                <div>
+                    <label></label>
+                    <input type="button" value="搜索" id="btSearch" class="ui right floated positive button btn-search"/>
+                </div>
+            </div>
+        </form>
+
+        <div class="table-container">
+            <table class="ui nine column table celled table-result" id="tab">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>工作</th>
+                    <th>预定时间</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
