@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="aissm:war">
+    <output-path>$PROJECT_DIR$/MavenSpringDemo/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>aissm</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="MavenSpringDemo.war">
+      <element id="artifact" artifact-name="aissm:war exploded" />
+    </root>
+  </artifact>
+</component>
